@@ -56,4 +56,57 @@ describe('template spec', () => {
     cy.get('.todo-list li')
       .should('have.length', 2);
   });
+
+  it('Insere e completa a tarefa', () => {
+    cy.visit('http://127.0.0.1:7001'); 
+
+    cy.get('.new-todo')
+      .type('Prova de Engenharia de Software{enter}');
+
+    cy.get('.todo-list li .toggle')
+      .first()
+      .click();
+
+    cy.get('.todo-list li')
+      .first()
+      .should('have.class', 'completed');
+  });
+
+  it('Insere duas tarefas e deleta uma', () => {
+    cy.visit('http://127.0.0.1:7001'); 
+
+    cy.get('.new-todo')
+      .type('Prova de Engenharia de Software{enter}')
+      .type('TP 2{enter}');
+
+    cy.get('.todo-list li .destroy')
+      .first()
+      .invoke('show')
+      .click();
+
+    cy.get('.todo-list li')
+      .should('have.length', 1);
+  });
+
+  it('Insere, completa e deleta a tarefa', () => {
+    cy.visit('http://127.0.0.1:7001'); 
+
+    cy.get('.new-todo')
+      .type('Prova de Engenharia de Software{enter}');
+
+    cy.get('.todo-list li .toggle')
+      .first()
+      .click();
+
+    cy.get('.todo-list li')
+      .first()
+      .should('have.class', 'completed');
+  
+    cy.get('.todo-list li .destroy')
+      .invoke('show')
+      .click();
+
+    cy.get('.todo-list li')
+      .should('have.length', 0);
+    });
 });
